@@ -27,7 +27,7 @@
             <th>Titolo</th>
             <th>Inizio</th>
             <th>Fine</th>
-            <th>Azioni</th>
+            <th sec:authorize="hasAuthority('ADMIN')">Azioni</th>
           </tr>
         </thead>
         <tbody>
@@ -35,7 +35,7 @@
             <td th:text="${specialOffer.title}"></td>
             <td th:text="${#temporals.format(specialOffer.startDate, 'dd/MM/yyyy')}"></td>
             <td th:text="${#temporals.format(specialOffer.endDate, 'dd/MM/yyyy')}"></td>
-            <td>
+            <td sec:authorize="hasAuthority('ADMIN')">
               <a th:href="@{/special-offers/edit/{id}(id=${specialOffer.id})}"
                 class="btn btn-sm btn-primary">Modifica</a>
             </td>

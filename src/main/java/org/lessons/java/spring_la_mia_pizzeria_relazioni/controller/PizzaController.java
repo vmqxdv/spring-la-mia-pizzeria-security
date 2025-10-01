@@ -7,6 +7,7 @@ import org.lessons.java.spring_la_mia_pizzeria_relazioni.model.SpecialOffer;
 import org.lessons.java.spring_la_mia_pizzeria_relazioni.repository.IngredientRepository;
 import org.lessons.java.spring_la_mia_pizzeria_relazioni.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,7 +31,7 @@ public class PizzaController {
   private IngredientRepository ingredientRepository;
 
   @GetMapping
-  public String index(@RequestParam(name = "name", required = false) String name, Model model) {
+  public String index(Authentication authentication, @RequestParam(required = false) String name, Model model) {
     List<Pizza> pizzas;
     if (name != null && !name.isBlank()) {
       pizzas = pizzaService.findByName(name);
@@ -38,6 +39,7 @@ public class PizzaController {
       pizzas = pizzaService.findAll();
 
     model.addAttribute("pizzas", pizzas);
+    model.addAttribute("username", authentication.getName());
 
     return "pizzas/index";
   }

@@ -20,7 +20,7 @@
             </div>
           </form>
         </div>
-        <div class="col-md-4 col-12 text-md-end mt-2 mt-md-0">
+        <div sec:authorize="hasAuthority('ADMIN')" class="col-md-4 col-12 text-md-end mt-2 mt-md-0">
           <a th:href="@{/ingredients/create}" class="btn btn-success">Aggiungi ingrediente</a>
         </div>
       </div>
@@ -45,11 +45,12 @@
             <td>
               <div class="d-flex gap-2">
                 <a th:href="@{/ingredients/{id}(id=*{id})}" class="btn btn-sm btn-outline-primary">Dettagli</a>
-                <a th:href="@{/ingredients/edit/{id}(id=*{id})}" class="btn btn-sm btn-outline-primary">Modifica</a>
+                <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/ingredients/edit/{id}(id=*{id})}"
+                  class="btn btn-sm btn-outline-primary">Modifica</a>
 
                 <!-- Bottone per far apparire modale -->
-                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                  th:attr="data-bs-target=${'#delete-modal-' + ingredient.id}">Elimina</button>
+                <button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-sm btn-outline-danger"
+                  data-bs-toggle="modal" th:attr="data-bs-target=${'#delete-modal-' + ingredient.id}">Elimina</button>
 
                 <!-- Modale -->
                 <div class="modal fade" th:id="${'delete-modal-' + ingredient.id}" tabindex="-1"

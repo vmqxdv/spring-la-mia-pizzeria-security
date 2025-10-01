@@ -8,6 +8,7 @@
   <div class="container mt-5">
     <section>
       <h2 class="mb-4">Le nostre pizze</h2>
+      <h3 class="mb-4">Ciao [[${username}]]!</h3>
       <div class="row g-3 mb-4 align-items-center">
         <div class="col-md-8 col-12">
           <form class="row g-3" method="get" th:action="@{/pizzas}">
@@ -20,7 +21,7 @@
             </div>
           </form>
         </div>
-        <div class="col-md-4 col-12 text-md-end mt-2 mt-md-0">
+        <div sec:authorize="hasAuthority('ADMIN')" class="col-md-4 col-12 text-md-end mt-2 mt-md-0">
           <a th:href="@{/pizzas/create}" class="btn btn-success">Aggiungi pizza</a>
         </div>
       </div>
@@ -48,16 +49,17 @@
             <td>
               <div class="d-flex gap-2">
                 <a th:href="@{/pizzas/{id}(id=*{id})}" class="btn btn-sm btn-outline-primary">Dettagli</a>
-                <a th:href="@{/pizzas/edit/{id}(id=*{id})}" class="btn btn-sm btn-outline-primary">Modifica</a>
+                <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/pizzas/edit/{id}(id=*{id})}"
+                  class="btn btn-sm btn-outline-primary">Modifica</a>
 
-                <a th:href="@{/pizzas/{id}/special-offers(id=*{id})}" class="btn btn-sm btn-outline-success"
-                  title="Crea offerta speciale per questa pizza">
+                <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/pizzas/{id}/special-offers(id=*{id})}"
+                  class="btn btn-sm btn-outline-success" title="Crea offerta speciale per questa pizza">
                   Crea offerta
                 </a>
 
                 <!-- Bottone per far apparire modale -->
-                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                  th:attr="data-bs-target=${'#delete-modal-' + pizza.id}">Elimina</button>
+                <button sec:authorize="hasAuthority('ADMIN')" type="button" class="btn btn-sm btn-outline-danger"
+                  data-bs-toggle="modal" th:attr="data-bs-target=${'#delete-modal-' + pizza.id}">Elimina</button>
 
                 <!-- Modale -->
                 <div class="modal fade" th:id="${'delete-modal-' + pizza.id}" tabindex="-1"
