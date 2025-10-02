@@ -21,10 +21,6 @@ public class PizzaService {
   public Pizza getById(Integer id) {
     Optional<Pizza> pizzaAttempt = pizzaRepository.findById(id);
 
-    if (pizzaAttempt.isEmpty()) {
-      // not found con response entity
-    }
-
     return pizzaAttempt.get();
   }
 
